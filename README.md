@@ -395,7 +395,9 @@ Let's check the asset by clicking on `asset` in the left hand side of the page. 
 ### Export the business network as a .bna file
 Click on `define` in the top of the page. Then `export` at the bottom of the page. This will automatically download your .bna file. 
 
-## Deploy the .bna file to the Starter Plan netowrk. 
+## Deploy the .bna file to the Starter Plan network 
+For this step, you will need to create an [IBM Cloud](https://ibm.biz/BdjLxy) account if you do not have one.  
+
 Use this guide to deploy your .bna file to the Starter Kit, and then use the rest-server to submit transactions and log them into to starter kit running on the cloud: https://hackernoon.com/deploy-a-business-network-on-free-ibm-blockchain-starter-plan-93fafb3dd997
 
 ## Demo of live network running on IBM Blockchain starter plan

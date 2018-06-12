@@ -276,3 +276,76 @@ Cool. If you see the ✅ you are good to go! Nice! Click `deploy` in the bottom-
 
 Nice!! We are ready to test the network!
 
+## Test the network
+To test the network, let's click on the `test` tab, at the top of the page. First, we have to create new participants. Click on the `Grower` tab on the left side of the page. Click on `Create new participant` on the top-right corner of the page. Add in the following json: 
+
+```
+{
+  "$class": "org.ibm.coffee.Grower",
+  "isFairTrade": false,
+  "growerId": "growerA",
+  "organization": "",
+  "address": {
+    "$class": "org.ibm.coffee.Address",
+    "country": ""
+  }
+}
+```
+
+Now, click on `importer` and follow the same process. Add in the following json:
+
+```
+{
+  "$class": "org.ibm.coffee.Importer",
+  "importerId": "importerA",
+  "organization": "",
+  "address": {
+    "$class": "org.ibm.coffee.Address",
+    "country": ""
+  }
+}
+```
+
+Now, let's do the regulator:
+
+```
+{
+  "$class": "org.ibm.coffee.Regulator",
+  "regulatorId": "regulatorA",
+  "organization": "",
+  "address": {
+    "$class": "org.ibm.coffee.Address",
+    "country": ""
+  }
+}
+```
+
+Lastly, the Retailer:
+
+```
+{
+  "$class": "org.ibm.coffee.Retailer",
+  "retailerId": "retailerA",
+  "organization": "",
+  "address": {
+    "$class": "org.ibm.coffee.Address",
+    "country": ""
+  }
+}
+```
+
+Now, click on the `submit transaction` button at the bottom-left corner of the page. Select `addCoffee` from the drop down. Fill in the following json:
+
+```
+{
+  "$class": "org.ibm.coffee.addCoffee",
+  "size": "SMALL",
+  "roast": "LIGHT",
+  "batchState": "READY_FOR_DISTRIBUTION",
+  "grower": "resource:org.ibm.coffee.Grower#growerA"
+}
+```
+
+Next, click `submit`.
+
+Great! Click on the coffee tab on the left, under 'assets' to ensure that your batch is created. Note the batchId. 

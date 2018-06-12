@@ -13,7 +13,7 @@ We will take the view of the regulator, who wants to see all transactions throug
 3. [Learn about Access Control language](#3-learn-about-access-control-language)
 4. [Learn about query language](#4-learn-about-query-language) 
 5. [Test the network](#5-test-the-network) 
-6. [Export the business network as a .bna file](#6-export-the-business-network-as-a-.bna-file)
+6. [Export the business network](#6-export-the-business-network)
 7. [Deploy the network to the Starter Plan](#7-deploy-the-network-to-the-starter-plan)
 
 ## Prerequisite
@@ -388,7 +388,7 @@ Lastly, let's transfer the coffee from the regulator to the retailer. This is th
 
 Let's check the asset by clicking on `asset` in the left hand side of the page. You should see the state as `READY_FOR_SALE` and the owner should now be retailerA. Nice job! You have successfully transferred the coffee through the blockchain! 
 
-## 6. Export the business network as a .bna file
+## 6. Export the business network 
 Click on `define` in the top of the page. Then `export` at the bottom of the page. This will automatically download your .bna file. 
 
 ## 7. Deploy the network to the Starter Plan  

@@ -334,6 +334,8 @@ Lastly, the Retailer:
 }
 ```
 
+### Submit addCoffee transaction
+
 Now, click on the `submit transaction` button at the bottom-left corner of the page. Select `addCoffee` from the drop down. Fill in the following json:
 
 ```
@@ -349,3 +351,52 @@ Now, click on the `submit transaction` button at the bottom-left corner of the p
 Next, click `submit`.
 
 Great! Click on the coffee tab on the left, under 'assets' to ensure that your batch is created. Note the batchId. 
+
+### Submit transferCoffee transaction
+
+Now, click on the `submit transaction` button at the bottom-left corner of the page. Select `transferCoffee` from the drop down. Fill in the following json:
+
+```
+{
+  "$class": "org.ibm.coffee.transferCoffee",
+  "newOwner": "resource:org.ibm.coffee.Importer#importerA",
+  "oldOwner": "resource:org.ibm.coffee.Grower#growerA",
+  "batchId": "1234567",
+  "newOwnerType": "IMPORTER"
+}
+```
+
+Next, let's transfer the coffee from the importer to the regulator. Using the same steps from above, fill in the following json:
+
+```
+{
+  "$class": "org.ibm.coffee.transferCoffee",
+  "newOwner": "resource:org.ibm.coffee.Regulator#regulatorA",
+  "oldOwner": "resource:org.ibm.coffee.Importer#importerA",
+  "batchId": "1234567",
+  "newOwnerType": "REGULATOR"
+}
+```
+
+Lastly, let's transfer the coffee from the regulator to the retailer. This is the last step. Using the same steps as above to submit the `transferCoffee` transaction, fill in the following json:
+
+```
+{
+  "$class": "org.ibm.coffee.transferCoffee",
+  "newOwner": "resource:org.ibm.coffee.Retailer#retailerA",
+  "oldOwner": "resource:org.ibm.coffee.Regulator#regulatorA",
+  "batchId": "1234567",
+  "newOwnerType": "RETAILER"
+}
+```
+
+Let's check the asset by clicking on `asset` in the left hand side of the page. You should see the state as `READY_FOR_SALE` and the owner should now be retailerA. Nice job! You have successfully transferred the coffee through the blockchain! 
+
+### Export the business network as a .bna file
+Click on `define` in the top of the page. Then `export` at the bottom of the page. This will automatically download your .bna file. 
+
+## Deploy the .bna file to the Starter Plan netowrk. 
+Use this guide to deploy your .bna file to the Starter Kit, and then use the rest-server to submit transactions and log them into to starter kit running on the cloud: https://hackernoon.com/deploy-a-business-network-on-free-ibm-blockchain-starter-plan-93fafb3dd997
+
+## Demo of live network running on IBM Blockchain starter plan
+This API is currently live, and I will show you the end result of deploying the rest-server to the cloud. The API can be found here: https://composer-rest-server-coffeetrackr.mybluemix.net/. After submitting transactions there, all transactions are logged on the blockchain starter plan.

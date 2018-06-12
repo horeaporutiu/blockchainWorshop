@@ -354,7 +354,7 @@ Great! Click on the coffee tab on the left, under 'assets' to ensure that your b
 
 ### Submit transferCoffee transaction
 
-Now, click on the `submit transaction` button at the bottom-left corner of the page. Select `transferCoffee` from the drop down. Fill in the following json:
+Now, click on the `submit transaction` button at the bottom-left corner of the page. Select `transferCoffee` from the drop down. ⚠️⚠️⚠️⚠️⚠️⚠️⚠️USE YOUR batchId from above⚠️⚠️⚠️⚠️⚠️⚠️⚠️, instead of mine. Fill in the following json:
 
 ```
 {

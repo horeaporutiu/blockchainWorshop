@@ -7,18 +7,14 @@ This workshop is inspired by a recent project I have been working on. I was give
 ## Viewpoint
 We will take the view of the regulator, who wants to see all transactions throughout the blockchain, to ensure that the coffee meets international standards. The end goal of the regulator is to have the ability to do a simple query on a particular batch of coffee and see all participants and transactions that have worked on this particular batch. Nice. Let's build this!
 
-## Steps
-1. Learn the [**Hyperledger Composer Modeling Language**](https://hyperledger.github.io/composer/latest/reference/cto_language.html) - effectively the data schema of the blockchain. 
-2. Create the .cto file.
-3. Learn how to create [**Transaction Processor Functions**](https://hyperledger.github.io/composer/latest/reference/js_scripts) - the way to transfer assets between participants on the blockchain.
-4. Create .js file.
-5. Learn about [**Access Control Language**](https://hyperledger.github.io/composer/latest/reference/acl_language) -  determine which users/roles are permitted to create, read, update or delete elements in a business network.
-5. Create .acl file.
-6. Learn about [**Queries**](https://hyperledger.github.io/composer/latest/reference/query-language) -  Quickly retrieve data from the blockchain. 
-7. Create .qry file
-8. Test the buisness network.
-9. Export the business network as a .bna (business network archive) file.
-10. Deploy .bna file to IBM Blockchain Starter Plan.
+# Steps
+1. [Learn the modeling language](#1-learn-the-modeling-language) 
+2. [Learn about transaction Processor Functions](#2-learn-about-transaction-processor-functions)
+3. [Learn about Access Control language](#3-learn-about-access-control-language)
+4. [Learn about query language](#4-learn-about-query-language) 
+5. [Test the network](#5-test-the-network) 
+6. [Export the business network as a .bna file](#6-export-the-business-network-as-a-.bna-file)
+7. [Deploy the network to the Starter Plan](#7-deploy-the-network-to-the-starter-plan)
 
 ## Prerequisite
 Go to https://composer-playground.mybluemix.net in your browser. 
@@ -29,8 +25,8 @@ Go to https://composer-playground.mybluemix.net in your browser.
 5. On the right-hand-side, click `deploy`
 6. This should take you to a page showing you your business networks. Under the coffeetracker network, click `connect now`.
 
-## Modeling language - .cto file
-The Hyperledger Composer modeling language is an object-oriented language that is used to define the model of a business network.  The .cto file (or the model file) is composed of the following elements:
+## 1. Learn the modeling language 
+The [**Hyperledger Composer Modeling Language**](https://hyperledger.github.io/composer/latest/reference/cto_language.html) is an object-oriented language that is used to define the model of a business network. The .cto file (or the model file) is composed of the following elements:
 1. A single namespace
 2. Resource definitions - assets, transactions, participants, and events.
 
@@ -154,10 +150,10 @@ Nice! That's it for the model.cto file. Let's move on to the logic of our applic
 
 Nice. If everything is good, you should see a ✅at the bottom of the page. If so, click on `deploy` in the bottom left corner. Great job!
 
-## Transaction Processor Functions - .js file
+## 2. Learn about transaction Processor Functions
 Now, it's time to write the heart of our application. The .js file. Let's start with the addCofee transaction. 
 
-We will need to create two transactions. To do this, we first need to create our .js file. Click on `add a file` on the bottom left corner of the page. Then click on `Script file .js`, and then `add`. You should now see a new .js file in the left side of the screen. 
+We will need to create two transactions. To do this, we first need to create our .js file. Click on `add a file` on the bottom left corner of the page. Then click on `Script file .js`, and then `add`. You should now see a new .js file in the left side of the screen. To learn more about transaction processor functions, go here: https://hyperledger.github.io/composer/latest/reference/js_scripts
 
 ### Create addCoffee transaction
 This transaction will take in a size, a type of roast, a batchState, and a grower participant. Let's define the function as below: 
@@ -243,10 +239,10 @@ async function transferCoffee(coffeeBatch) {
 
 Nice! We are done with the .js file. If you see the ✅ in the bottom of the screen, you are good to go! Click on `deploy` in the bottom-left corner.
 
-## Access Control language - .acl file
-Since we are building a very basic network, we will just keep the default file that comes out of the box with our network. No need to change anything here. 
+## 3. Learn about Access Control language 
+Since we are building a very basic network, we will just keep the default file that comes out of the box with our network. No need to change anything here. To learn more about the access control language, go here: https://hyperledger.github.io/composer/latest/reference/acl_language
 
-## Query language - .qry file
+## 4. Learn about query language 
 Ok, we are almost done. Let's build a query to check all the different times a particular batch has gone through the 'transferCoffee' transaction. This will help us, as a regulator, gain insight into where this batch has been, and which participants have worked with this batch. 
 
 Click on `add a file` in the bottom left corner. Click on `query.qry` file. Click `add`. Let's define the queries as below:
@@ -276,7 +272,7 @@ Cool. If you see the ✅ you are good to go! Nice! Click `deploy` in the bottom-
 
 Nice!! We are ready to test the network!
 
-## Test the network
+## 5. Test the network
 To test the network, let's click on the `test` tab, at the top of the page. First, we have to create new participants. Click on the `Grower` tab on the left side of the page. Click on `Create new participant` on the top-right corner of the page. Add in the following json: 
 
 ```
@@ -392,10 +388,10 @@ Lastly, let's transfer the coffee from the regulator to the retailer. This is th
 
 Let's check the asset by clicking on `asset` in the left hand side of the page. You should see the state as `READY_FOR_SALE` and the owner should now be retailerA. Nice job! You have successfully transferred the coffee through the blockchain! 
 
-### Export the business network as a .bna file
+## 6. Export the business network as a .bna file
 Click on `define` in the top of the page. Then `export` at the bottom of the page. This will automatically download your .bna file. 
 
-## Deploy the .bna file to the Starter Plan network 
+## 7. Deploy the network to the Starter Plan  
 For this step, you will need to create an [IBM Cloud](https://ibm.biz/BdjLxy) account if you do not have one.  
 
 Use this guide to deploy your .bna file to the Starter Kit, and then use the rest-server to submit transactions and log them into to starter kit running on the cloud: https://hackernoon.com/deploy-a-business-network-on-free-ibm-blockchain-starter-plan-93fafb3dd997

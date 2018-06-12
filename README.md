@@ -1,5 +1,5 @@
 # Blockchain Workshop
-Learn how to build a blockchain network with Hyperledger Composer
+Learn how to build a blockchain network with Hyperledger Composer. Intro to the workshop is here: https://www.slideshare.net/HoreaPorutiu/blockchain-workshop-ibm-code-day-montevideo
 
 # Overview
 This workshop is inspired by a recent project I have been working on. I was given the task to create a generic blockchain network to model the path that a batch of coffee goes through as it moves through the supply chain. We will start with the coffee grower who has a batch of coffee beans that is ready to be sold. That batch will go from the grower, to the importer who will buy the coffee from the grower. Then a regulator such as the international coffee association will have to check the coffee to ensure its quality. Finally, the coffee will be moved to the retailer, who will sell the coffee. 

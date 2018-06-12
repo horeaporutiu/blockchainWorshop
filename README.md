@@ -400,3 +400,6 @@ Use this guide to deploy your .bna file to the Starter Kit, and then use the res
 
 ## Demo of live network running on IBM Blockchain starter plan
 This API is currently live, and I will show you the end result of deploying the rest-server to the cloud. The API can be found here: https://composer-rest-server-coffeetrackr.mybluemix.net/. After submitting transactions there, all transactions are logged on the blockchain starter plan.
+
+## Next steps
+Deploy your business network to the cloud using this guide: https://github.com/sstone1/blockchain-starter-kit

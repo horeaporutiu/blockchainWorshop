@@ -20,3 +20,18 @@ We will take the view of the regulator, who wants to see all transactions throug
 9. Export the business network as a .bna (business network archive) file.
 10. Deploy .bna file to IBM Blockchain Starter Plan.
 
+## Prerequisite
+Go to https://composer-playground.mybluemix.net in your browser. 
+1. Click on `Deploy a new business network` 
+2. For business network name, type in `coffeetracker`
+3. For network admin card, type in `admin@coffeetracker`
+4. Under template, select `empty-business-network`
+5. On the right-hand-side, click `deploy`
+6. This should take you to a page showing you your business networks. Under the coffeetracker network, click `connect now`.
+
+## Modeling language - .cto file
+The Hyperledger Composer modeling language is an object-oriented language that is used to define the model of a business network.  The .cto file (or the model file) is composed of the following elements:
+1. A single namespace
+2. Resource definitions - assets, transactions, participants, and events.
+
+After clicking `connect now`, you should be taken to your editor. On the left-hand side, you will see a `model file`. The first thing we need to do is change our namespace. Let's type in 

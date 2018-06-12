@@ -1,5 +1,5 @@
 # Blockchain Workshop
-Learn how to build a blockchain network with Hyperledger Composer. Intro to the workshop is here: https://www.slideshare.net/HoreaPorutiu/blockchain-workshop-ibm-code-day-montevideo
+Learn how to build a blockchain network with Hyperledger Composer
 
 # Overview
 This workshop is inspired by a recent project I have been working on. I was given the task to create a generic blockchain network to model the path that a batch of coffee goes through as it moves through the supply chain. We will start with the coffee grower who has a batch of coffee beans that is ready to be sold. That batch will go from the grower, to the importer who will buy the coffee from the grower. Then a regulator such as the international coffee association will have to check the coffee to ensure its quality. Finally, the coffee will be moved to the retailer, who will sell the coffee. 
@@ -94,11 +94,12 @@ asset Coffee identified by batchId {
 ```
 
 ### Create enumerated types
-Enumerated types are used to specify when a type has 1 to N possible values. These are useful when you know what possible values a field can take. So, for our coffee example, we will have 3 enumerated types:
+Enumerated types are used to specify when a type has 1 to N possible values. These are useful when you know what possible values a field can take. So, for our coffee example, we will have 4 enumerated types:
 
 1. Type of roast
 2. Size of batch
 3. State of batch 
+4. Type of owner
 
 Let's define the types as below:
 
@@ -121,9 +122,157 @@ enum State {
   o REGULATION_TEST_PASSED
   o READY_FOR_SALE
 }
+
+enum ownerType {
+  o GROWER
+  o IMPORTER
+  o REGULATOR
+  o REATAILER
+}
 ```
 
+## Create transactions
+Let's add the data schema for our transactions. Let's model them as below:
+```
+transaction transferCoffee {
+  --> Business newOwner
+  --> Business oldOwner
+  o String batchId
+  o ownerType newOwnerType
+}
 
+transaction addCoffee{
+  o Size size
+  o CoffeeRoast roast
+  o State batchState
+  --> Grower grower
+}
+```
+The transferCoffee transaction takes two types of Businesses, one which is the newOwner, and the other which is the oldOwner. The newOwnerType will be the expected type of owner that will receive the batch of coffee.
 
+Nice! That's it for the model.cto file. Let's move on to the logic of our application, the script file.
 
+Nice. If everything is good, you should see a ✅at the bottom of the page. If so, click on `deploy` in the bottom left corner. Great job!
+
+## Transaction Processor Functions - .js file
+Now, it's time to write the heart of our application. The .js file. Let's start with the addCofee transaction. 
+
+We will need to create two transactions. To do this, we first need to create our .js file. Click on `add a file` on the bottom left corner of the page. Then click on `Script file .js`, and then `add`. You should now see a new .js file in the left side of the screen. 
+
+### Create addCoffee transaction
+This transaction will take in a size, a type of roast, a batchState, and a grower participant. Let's define the function as below: 
+
+```
+/**
+ * Sample transaction processor function.
+ * @param {org.ibm.coffee.addCoffee} tx The send message instance.
+ * @transaction
+ */
+async function addCoffee(newCoffee) {
+  
+  const participantRegistry = await getParticipantRegistry('org.ibm.coffee.Grower');
+  var NS = 'org.ibm.coffee';
+  var coffee = getFactory().newResource(NS, 'Coffee', Math.random().toString(36).substring(3));
+  coffee.size = newCoffee.size;
+  coffee.roast = newCoffee.roast;
+  coffee.owner = newCoffee.grower;
+  coffee.batchState = newCoffee.batchState;
+  
+  const assetRegistry = await getAssetRegistry('org.ibm.coffee.Coffee');
+  await assetRegistry.add(coffee);
+  await participantRegistry.update(newCoffee.grower);
+}
+```
+
+### Create transferCoffee transaction
+
+Next, let's write the transferCoffee transaction. This transaction will take in two businesses, a newOwner, and oldOwner, a batchId, and then an emum, which is the newOwnerType. Let's define this transaction as below: 
+
+```
+/**
+ * Sample transaction processor function.
+ * @param {org.ibm.coffee.transferCoffee} tx The send message instance.
+ * @transaction
+ */
+async function transferCoffee(coffeeBatch) {
+  
+  if (coffeeBatch.batchId.length <= 0) {
+    throw new Error('Please enter the batchId');
+  }
+  
+  if (coffeeBatch.newOwner.length <= 0) {
+    throw new Error('Please enter the new owner');
+  }
+  
+  const assetRegistry = await getAssetRegistry('org.ibm.coffee.Coffee');
+  
+  const exists = await assetRegistry.exists(coffeeBatch.batchId);
+  
+  if (exists) {
+  	const coffee = await assetRegistry.get(coffeeBatch.batchId);
+    
+    coffeeBatch.oldOwner = coffee.owner;
+    coffee.owner = coffeeBatch.newOwner;
+   
+    if (coffeeBatch.newOwnerType.toLowerCase() == 'importer') {
+
+      const participantRegistry = await getParticipantRegistry('org.ibm.coffee.Importer');
+      await participantRegistry.update(coffeeBatch.newOwner);
+      coffee.batchState = "IMPORTED";
+      
+    } else if (coffeeBatch.newOwnerType.toLowerCase() == 'regulator') {
+      const participantRegistry = await getParticipantRegistry('org.ibm.coffee.Regulator');
+	  await participantRegistry.update(coffeeBatch.newOwner);
+      coffee.batchState = "REGULATION_TEST_PASSED";
+    } else {
+      const participantRegistry = await getParticipantRegistry('org.ibm.coffee.Retailer');
+      await participantRegistry.update(coffeeBatch.newOwner);
+      coffee.batchState = "READY_FOR_SALE";
+    }
+    
+    await assetRegistry.update(coffee);
+    
+    
+  } else {
+  	throw new Error('the batch you specified does not exist!');
+  }
+  
+  
+}
+```
+
+Nice! We are done with the .js file. If you see the ✅ in the bottom of the screen, you are good to go! Click on `deploy` in the bottom-left corner.
+
+## Access Control language - .acl file
+Since we are building a very basic network, we will just keep the default file that comes out of the box with our network. No need to change anything here. 
+
+## Query language - .qry file
+Ok, we are almost done. Let's build a query to check all the different times a particular batch has gone through the 'transferCoffee' transaction. This will help us, as a regulator, gain insight into where this batch has been, and which participants have worked with this batch. 
+
+Click on `add a file` in the bottom left corner. Click on `query.qry` file. Click `add`. Let's define the queries as below:
+
+```
+query getBatchHistory { 
+  description: "see all of the participants that have worked with a particular batch" 
+  statement: 
+  		SELECT org.ibm.coffee.transferCoffee
+  			WHERE (batchId == _$batchId ) 
+}
+```
+What we have done here, is used a `SELECT` statement, which selects all of the transferCoffee transactions in the history of the blockchain, and queries them for the particular batchId that we enter.
+
+Since when we first add coffee to the blockchain, we use the addCoffee function, we will have to create a seperate query for that function. Let's define it as below: 
+
+```
+query getBatchHistory { 
+  description: "see all of the participants that have worked with a particular batch" 
+  statement: 
+  		SELECT org.ibm.coffee.transferCoffee
+  			WHERE (batchId == _$batchId ) 
+}
+```
+
+Cool. If you see the ✅ you are good to go! Nice! Click `deploy` in the bottom-left corner.
+
+Nice!! We are ready to test the network!
 

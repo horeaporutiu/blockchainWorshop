@@ -1,4 +1,4 @@
-# blockchainWorshop
+# Blockchain Workshop
 Learn how to build a blockchain network with Hyperledger Composer
 
 # Overview
@@ -8,10 +8,15 @@ This workshop is inspired by a recent project I have been working on. I was give
 We will take the view of the regulator, who wants to see all transactions throughout the blockchain, to ensure that the coffee meets international standards.
 
 ## Steps
-1. Learn the [**Hyperledger Composer Modeling Language**](https://hyperledger.github.io/composer/latest/reference/cto_language.html)
-2. Located and click on your newly created application 
-3. Select 'Runtime' in the left menu
-4. Select the 'Environment Variables' tab in the middle of the page
-5. Scroll down to the User defined variables section
-6. Click on ``add``. 
-7. THIS IS EXTREMELY IMPORTANT. Make sure to write the name of the env variable EXACTLY as shown, otherwise, the app wont work. Scroll up until you see `VCAP_SERVICES`. You will then see `cloudantNoSQLDB` and under that `url`.  Under 'Name', type in `CLOUDANT_URL`, and under 'Value', paste the `url` value from the `cloudantNoSQLDB` section of `VCAP_SERVICES`.
+1. Learn the [**Hyperledger Composer Modeling Language**](https://hyperledger.github.io/composer/latest/reference/cto_language.html) - effectively the data schema of the blockchain. 
+2. Create the .cto file.
+3. Learn how to create [**Transaction Processor Functions**](https://hyperledger.github.io/composer/latest/reference/js_scripts) - the way to transfer assets between participants on the blockchain.
+4. Create .js file.
+5. Learn about [**Access Control Language**](https://hyperledger.github.io/composer/latest/reference/acl_language) -  determine which users/roles are permitted to create, read, update or delete elements in a business network.
+5. Create .acl file.
+6. Learn about [**Queries**](https://hyperledger.github.io/composer/latest/reference/query-language) -  Quickly retrieve data from the blockchain. 
+7. Create .qry file
+8. Test the buisness network.
+9. Export the business network as a .bna (business network archive) file.
+10. Deploy .bna file to IBM Blockchain Starter Plan.
+

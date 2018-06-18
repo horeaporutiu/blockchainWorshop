@@ -1,0 +1,92 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+namespace org.ibm.coffee
+
+abstract participant Business {
+  o String organization
+  o Address address
+}
+
+concept Address {
+  o String city optional
+  o String country
+  o String street optional
+  o String zip optional
+}
+
+participant Grower identified by growerId extends Business {
+  o Boolean isFairTrade
+  o String growerId
+}
+
+participant Importer identified by importerId extends Business {
+     o String importerId
+}
+
+participant Regulator identified by regulatorId extends Business{
+  o String regulatorId
+}
+
+participant Retailer identified by retailerId extends Business{
+  o String retailerId
+}
+
+asset Coffee identified by batchId {
+  o String batchId
+  o Size size
+  o CoffeeRoast roast
+  o State batchState
+  --> Business owner
+}
+
+enum CoffeeRoast {
+  o LIGHT
+  o MEDIUM
+  o DARK
+}
+
+enum Size {
+  o SMALL
+  o MEDIUM
+  o LARGE
+}
+
+enum State {
+  o READY_FOR_DISTRIBUTION
+  o IMPORTED
+  o REGULATION_TEST_PASSED
+  o READY_FOR_SALE
+}
+
+enum ownerType {
+  o GROWER
+  o IMPORTER
+  o REGULATOR
+  o RETAILER
+}
+
+transaction transferCoffee {
+  --> Business newOwner
+  --> Business oldOwner
+  o String batchId
+  o ownerType newOwnerType
+}
+
+transaction addCoffee{
+  o Size size
+  o CoffeeRoast roast
+  o State batchState
+  --> Grower grower
+}

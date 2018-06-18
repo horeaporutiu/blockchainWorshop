@@ -123,7 +123,7 @@ enum ownerType {
   o GROWER
   o IMPORTER
   o REGULATOR
-  o REATAILER
+  o RETAILER
 }
 ```
 
